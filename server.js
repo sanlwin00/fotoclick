@@ -11,7 +11,7 @@ const UsersRouter = require('./routes/UsersRouter');
 const PageRouter = require('./routes/PageRouter');
 
 app.use(bodyParser.json());
-app.use(logger("dev"));
+//app.use(logger("dev"));
 app.use(express.static('public'));
 app.set("view engine", "ejs");
 

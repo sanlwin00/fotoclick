@@ -30,7 +30,7 @@
                 </div>
                 <% } else { %>
                     <div>
-                        <p><a href="/login">Login</a> to add comment.</p>
+                        <p><a href="/login?redirectUrl=/comments<%= requestUrl %>">Login</a> to add comment.</p>
                     </div>
                 <% } %>
                 <% for ( var i=0; i <comments.length; i++){ %>

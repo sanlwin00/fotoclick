@@ -27,6 +27,9 @@
                                     <button type="submit" class btn btn-primary id="sendMessaageButton">
                                         login
                                     </button>
+                                    <% if(redirectUrl) { %>
+                                    <input type="hidden" id="redirectUrl" name="redirectUrl" value="<%= redirectUrl %>" />
+                                    <% } %>
                                 </div>
                             </div>
                         </form>

@@ -32,7 +32,6 @@ PhotosRouter.route('/')
         db.photo
         .findAll()
         .then((photo) => {
-            console.log("GET images");
             response.send(photo);
         })
         .catch((error)=>{
@@ -43,11 +42,12 @@ PhotosRouter.route('/')
 PhotosRouter.route('/')
     .post(upload.single("photo"), (request, response) => {
         const title = request.body.title;
+        const description = request.body.description;
         const medialocation = request.file.filename;
+        const userId = global.loggedIn;
         db.photo
-            .create({title: title, medialocation: medialocation})
+            .create({title: title, medialocation: medialocation, description: description, userId: userId})
             .then((photo)=>{
-                console.log ("POST Images");
                 response.redirect("/");
             })
             .catch((error)=>{

@@ -25,7 +25,11 @@ UsersRouter.route('/login')
                         if(same){
                             console.log(`User ${user.id} logged in`);
                             request.session.userId = user.id;
-                            response.redirect("/");
+                            console.log(request.body.redirectUrl);
+                            if(request.body.redirectUrl)
+                                response.redirect(request.body.redirectUrl);
+                            else    
+                                response.redirect("/");
                         }
                         else
                         {

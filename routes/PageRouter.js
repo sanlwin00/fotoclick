@@ -12,29 +12,31 @@ PageRouter.get("/", (request, response) => {
 })
 
 PageRouter.get("/photo", (request, response)=>{        
-    if(request.session.userId){
-        console.log(`userId: ${request.session.userId}`);
-        response.render('photo');
+    if(global.loggedIn){        
+        response.render("photo");
     }
     else{
-        response.render("login", {data: ""});
+        response.redirect("login?redirectUrl=/photo");
     }        
 })
 
 PageRouter.get("/login", (request, response)=>{    
-    response.render('login', {data: ""});
+    if(request.query.redirectUrl)        
+        response.render("login", {data: "", redirectUrl: request.query.redirectUrl});
+    else
+        response.render("login", {data: "", redirectUrl: ""});
 })
 
 PageRouter.get("/badlogin", (request, response)=>{    
-    response.render('login', {data: "No such user!"});
+    response.render("login", {data: "No such user!", redirectUrl: ""});
 })
 
 PageRouter.get("/invalidlogin", (request, response)=>{    
-    response.render('login', {data: "Invalid login credentials!"});
+    response.render("login", {data: "Invalid login credentials!", redirectUrl: ""});
 })
 
 PageRouter.get("/signUp", (request, response)=>{    
-    response.render('signup');
+    response.render("signup");
 })
 
 PageRouter.get("/logout", (request, response)=>{    
@@ -44,7 +46,7 @@ PageRouter.get("/logout", (request, response)=>{
 })
 
 PageRouter.get("/*", (request, response)=>{    
-    response.render('404');
+    response.render("404");
 })
 
 
