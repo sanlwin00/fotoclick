@@ -1552,9 +1552,9 @@ input, select, textarea {
 
 	@media screen and (max-width: 736px) {
 
-		body {
+		/* body {
 			padding: 4em 0 0 0;
-		}
+		} */
 
 		#header {
 			-moz-transform: translateY(0);

@@ -22,7 +22,7 @@ PageRouter.get("/photo", (request, response)=>{
 
 PageRouter.get("/login", (request, response)=>{    
     if(request.query.redirectUrl)        
-        response.render("login", {data: "", redirectUrl: request.query.redirectUrl});
+        response.render("login", {data: "Please login to continue.", redirectUrl: request.query.redirectUrl});
     else
         response.render("login", {data: "", redirectUrl: ""});
 })
