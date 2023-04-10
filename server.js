@@ -17,9 +17,9 @@ app.set("view engine", "ejs");
 
 //session handling
 global.loggedIn = null;
-app.use(expressSession({secret : "Drew Loves Kinsta"}));
+app.use(expressSession({secret : "fotoclicks is awesome"}));
 app.use("*", (request, response, next)=>{
-    loggedIn = request.session.userId;
+    global.loggedIn = request.session.userId;
     next();
 })
 

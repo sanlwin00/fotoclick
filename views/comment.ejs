@@ -17,10 +17,10 @@
     <div class="container">
         <h1>Comments</h1>
         <form action="/comments<%=requestUrl%>" method="POST" enctype="application/json">
-            <% if(loggedIn) { %>
+            <% if(global.loggedIn) { %>
                 <div class="d-flex mb-3">
                     <div class="d-flex flex-row align-items-center">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (loggedIn % 30 === 0) ? 31 : loggedIn % 30 %>).webp"
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (global.loggedIn % 30 === 0) ? 31 : global.loggedIn % 30 %>).webp"
                             alt="avatar" width="25" height="25" />                        
                     </div>
                     <div class="flex-grow-1 my-1 mx-2">

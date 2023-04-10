@@ -22,10 +22,9 @@ UsersRouter.route('/login')
                 else
                 {
                     bcrypt.compare(password, user.password, (error, same)=>{
-                        if(same){
-                            console.log(`User ${user.id} logged in`);
+                        if(same){                            
                             request.session.userId = user.id;
-                            console.log(request.body.redirectUrl);
+                            request.session.userName = user.name;
                             if(request.body.redirectUrl)
                                 response.redirect(request.body.redirectUrl);
                             else    
