@@ -27,11 +27,12 @@ CommentsRouter.route('/:photoId')
         db.photo
             .findOne({
                 where: {id: photoId},
-                include: [{ model: db.user, as: 'user' }, { model: db.comment, as: 'comments' }]
+                include: [
+                    { model: db.user, as: 'user' }, 
+                    { model: db.comment, as: 'comments', include: [{ model: db.user, as: 'user'}]}
+                ]
             })
-            .then((photo)=>{
-                console.log(photo.user.username);
-                console.log(photo.comments[0].content);
+            .then((photo)=>{                
                 response.render("comment",{photo: photo, comments: photo.comments, requestUrl: request.url} );
             })
             .catch((error)=> {
