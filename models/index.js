@@ -39,7 +39,4 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 
-// db.user.hasMany(db.comment);
-// db.comment.belongsTo(db.user, {foreignKey: 'userId'});
-
 module.exports = db;

@@ -1,19 +1,30 @@
-
 <%- include('partials/head') %>
-<%- include('partials/navbar') %>
-<!-- Wrapper -->
-<div id="wrapper">
-	<%- include('partials/header') %>
-	<!-- Main -->
-	<div id="main">
-		<% for (let i=0; i<data.length; i++) { %>
-		<article class="thumb">
-			<a href="images/<%= data[i].dataValues.medialocation %>" class="image"><img src="images/<%= data[i].dataValues.medialocation %>" alt="" /></a>
-			<h2><%= data[i].dataValues.title %></h2>
-			<p><%= data[i].dataValues.description %></p>
-			<p>💬 <a href="/comments/<%= data[i].dataValues.id %>">Comments</a></p>
-		</article>
-		<% } %>
-	</div>
-</div>
-<%- include('partials/footer') %>
+	<%- include('partials/navbar') %>
+		<!-- Wrapper -->
+		<div id="wrapper">
+			<%- include('partials/header') %>
+				<!-- Main -->
+				<div id="main">
+					<% for (let i=0; i<data.length; i++) { %>
+						<article class="thumb">
+							<a href="images/<%= data[i].dataValues.medialocation %>" class="image"><img
+									src="images/<%= data[i].dataValues.medialocation %>" alt="" /></a>
+							<div class="d-flex justify-content-between mb-3">
+								<div class="align-self-end">
+									<h2>
+										<%= data[i].dataValues.title %>
+									</h2>
+									<%= data[i].dataValues.description %>
+									
+								</div>
+								<div class="align-self-end">
+									<a href="/comments/<%= data[i].dataValues.id %>">
+										<h5>💬 Comments</h5>
+									</a>
+								</div>
+							</div>
+						</article>
+						<% } %>
+				</div>
+		</div>
+		<%- include('partials/footer') %>
