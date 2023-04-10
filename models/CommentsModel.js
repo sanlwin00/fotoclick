@@ -21,5 +21,14 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     );
+    // association :  a comment belongs to a user, a comment is linked to a photo
+    Comments.associate = (models) => {
+        Comments.belongsTo(models.user, {
+            foreignKey: 'userId'
+        });
+        Comments.belongsTo(models.photo, {
+            foreignKey: 'photoId'
+        });
+    };
     return Comments;
 }

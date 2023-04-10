@@ -24,21 +24,19 @@ CommentsRouter.route('/:photoId')
 CommentsRouter.route('/:photoId')
     .get((request, response)=>{        
         const photoId = request.params.photoId;     
-        db.comment
-            .findAll({where:{ photoId: photoId}})
-            .then((comments)=>{
-                db.photo
-                    .findOne({where: {id: photoId}})
-                    .then((photo)=>{
-                        response.render("comment",{photo: photo, comments: comments, requestUrl: request.url} );
-                    })
-                    .catch((error)=> {
-                        response.send(error);
-                    });
+        db.photo
+            .findOne({
+                where: {id: photoId},
+                include: [{ model: db.user, as: 'user' }, { model: db.comment, as: 'comments' }]
             })
-            .catch((error)=>{
-                response.error("Failed to retrieve comments!", error);
-            });
+            .then((photo)=>{
+                console.log(photo.user.username);
+                console.log(photo.comments[0].content);
+                response.render("comment",{photo: photo, comments: photo.comments, requestUrl: request.url} );
+            })
+            .catch((error)=> {
+                response.send(error);
+            });        
     });
 
 module.exports = CommentsRouter;

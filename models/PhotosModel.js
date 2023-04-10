@@ -27,5 +27,12 @@ module.exports = (sequelize, DataTypes) => {
             }
         }
     );
+    // association : a photo belongs to a user / a photo can have many comments
+    Photos.associate = (models) => {
+        Photos.belongsTo(models.user, {
+            foreignKey: 'userId'
+        });
+        Photos.hasMany(models.comment);
+    };
     return Photos;
 }

@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
-
+//const Comment = require('../models/CommentsModel');
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define(
         "user",
@@ -19,8 +19,13 @@ module.exports = (sequelize, DataTypes) => {
             },
             username: {
                 type: DataTypes.STRING
-            }
+            }            
         }
-    );
+    );    
+    // association :  1 user -> many comments / 1 user -> many photos
+    Users.associate = (models) => {
+        Users.hasMany(models.comment);
+        Users.hasMany(models.photo);
+    };
     return Users;
 }
