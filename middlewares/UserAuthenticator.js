@@ -11,7 +11,7 @@ function checkLoginSession(req, res, next)
 
 function authenticateUser(req, res, next){
     if (req.user == null){
-        return res.status(403).send('Please login!');
+        return res.status(403).send('You are not logged in!');
     }
     next();
 }
