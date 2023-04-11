@@ -9,7 +9,7 @@ CommentsRouter.use(bodyParser.urlencoded());
 CommentsRouter.route('/:photoId')
     .post((request, response)=>{        
         const photoId = request.params.photoId; 
-        const userId = global.loggedIn;
+        const userId = request.user.id;
         const content = request.body.comment;       
         db.comment
             .create({userId:userId, photoId: photoId, content: content})

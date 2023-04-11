@@ -44,7 +44,7 @@ PhotosRouter.route('/')
         const title = request.body.title;
         const description = request.body.description;
         const medialocation = request.file.filename;
-        const userId = global.loggedIn;
+        const userId = request.user.id;
         db.photo
             .create({title: title, medialocation: medialocation, description: description, userId: userId})
             .then((photo)=>{

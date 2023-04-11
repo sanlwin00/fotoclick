@@ -9,19 +9,16 @@ const PhotosRouter = require('./routes/PhotosRouter');
 const CommentsRouter = require('./routes/CommentsRouter');
 const UsersRouter = require('./routes/UsersRouter');
 const PageRouter = require('./routes/PageRouter');
+const UserAuthenticator = require('./middlewares/UserAuthenticator')
 
-app.use(bodyParser.json());
 //app.use(logger("dev"));
+app.use(bodyParser.json());
 app.use(express.static('public'));
 app.set("view engine", "ejs");
 
 //session handling
-global.loggedIn = null;
 app.use(expressSession({secret : "fotoclicks is awesome"}));
-app.use("*", (request, response, next)=>{
-    global.loggedIn = request.session.userId;
-    next();
-})
+app.use(UserAuthenticator.checkLoginSession);
 
 //routes
 app.use('/images', PhotosRouter);
@@ -29,10 +26,8 @@ app.use('/comments', CommentsRouter);
 app.use('/users', UsersRouter);
 app.use('/', PageRouter);
 
-
 //db
 const sqlPort = 3306;
-
 db.sequelize
     .sync()
     .then(()=>{

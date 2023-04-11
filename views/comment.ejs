@@ -17,10 +17,10 @@
     <div class="container">
         <h1>Comments</h1>
         <form action="/comments<%=requestUrl%>" method="POST" enctype="application/json">
-            <% if(global.loggedIn) { %>
+            <% if(user) { %>
                 <div class="d-flex mb-3">
                     <div class="d-flex flex-row align-items-center">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (global.loggedIn % 30 === 0) ? 31 : global.loggedIn % 30 %>).webp"
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (user.id % 30 === 0) ? 31 : user.id % 30 %>).webp"
                             alt="avatar" width="25" height="25" />                        
                     </div>
                     <div class="flex-grow-1 my-1 mx-2">
@@ -40,7 +40,7 @@
                 <% } %>
                 <% for ( var i=0; i <comments.length; i++){ %>
                     <div class="card mb-4">
-                        <div class="card-body">
+                        <div class="card-body bg-light">
                             <p>
                                 <%= comments[i].dataValues.content %>
                             </p>

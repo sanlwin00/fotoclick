@@ -12,7 +12,7 @@ PageRouter.get("/", (request, response) => {
 })
 
 PageRouter.get("/photo", (request, response)=>{        
-    if(global.loggedIn){        
+    if(request.user){        
         response.render("photo");
     }
     else{

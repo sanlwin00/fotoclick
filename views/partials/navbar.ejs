@@ -13,23 +13,23 @@
         <li class="nav-item">
           <a class="nav-link" href="/photo"><i class="fas fa-upload"></i> UPLOAD</a>
         </li>
-        <% if(!global.loggedIn) { %>
+        <% if(!user) { %>
         <li class="nav-item">
           <a class="nav-link" href="/login"><i class="fas fa-user"></i> LOGIN</a>
         </li>
         <% } %>
-        <% if(global.loggedIn) { %>
+        <% if(user) { %>
         <li class="nav-item">
           <a class="nav-link d-flex align-items-center" href="/logout">
           <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (global.loggedIn % 30 === 0) ? 31 : global.loggedIn % 30 %>).webp"
+          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (user.id % 30 === 0) ? 31 : user.id % 30 %>).webp"
           class="rounded-circle me-1"
           height="22"
           alt="Portrait of a Woman"
           loading="lazy"/> LOGOUT</a>
         </li>        
         <% } %>
-        <% if(!global.loggedIn) { %>
+        <% if(!user) { %>
         <li class="nav-item">
           <a class="nav-link" href="/signup"><i class="fas fa-asterisk"></i> SIGNUP</a>
         </li>
