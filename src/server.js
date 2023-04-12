@@ -4,6 +4,8 @@ const db = require('./models');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const logger = require('morgan');
+const env = process.env.NODE_ENV || 'development';
+const config = require('./config/config')[env];
 
 const PhotosRouter = require('./routes/PhotosRouter');
 const CommentsRouter = require('./routes/CommentsRouter');
@@ -17,7 +19,7 @@ app.use(express.static('public'));
 app.set("view engine", "ejs");
 
 //session handling
-app.use(expressSession({secret : "fotoclicks is awesome"}));
+app.use(expressSession({secret : "fotoclick is awesome"}));
 app.use(UserAuthenticator.checkLoginSession);
 
 //routes
@@ -27,7 +29,7 @@ app.use('/users', UsersRouter);
 app.use('/', PageRouter);
 
 //db
-const sqlPort = 3306;
+const sqlPort = config.db_port;
 db.sequelize
     .sync()
     .then(()=>{
@@ -41,7 +43,8 @@ db.sequelize
 //db.sequelize.sync({force:true}).... would dump/empty the tables in the db, useful for clearing test data
 
 //server
-const port = 8080;
+const port = config.port;
+
 app.listen(port, () => {   
     console.log(`Photo app initialized on http://localhost:${port}`);
 });
