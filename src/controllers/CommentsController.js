@@ -7,10 +7,12 @@ exports.getPhotoWithComments = (request, response)=>{
             where: {id: photoId},
             include: [
                 { model: db.user, as: 'user' }, 
-                { model: db.comment, as: 'comments', include: [{ model: db.user, as: 'user'}]}
+                { model: db.comment, as: 'comments'
+                    , include: [{ model: db.user, as: 'user'}, 
+                                { model: db.reaction, as: 'reactions'}]}
             ]
         })
-        .then((photo)=>{                     
+        .then((photo)=>{                           
             response.render("comment",{photo: photo, comments: photo.comments, requestUrl: request.url} );
         })
         .catch((error)=> {

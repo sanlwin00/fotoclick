@@ -65,16 +65,21 @@
                                                 <%= comments[i].user.username %>
                                             </p>
                                         </div>
-                                        <div class="d-flex flex-row align-items-center">
-                                            <p class="small text-muted mb-0">Upvote?</p>
-                                            <button id="upvote" class="btn btn-link shadow-none px-0 text-black" formaction="/comments<%= requestUrl %>/<%= comments[i].id %>/1">
+                                        <div class="d-flex flex-row align-items-center">                                            
+                                            <% var reactionValue = 0; %>
+                                            <% if(user) { %>
+                                            <% let userReaction = comments[i].reactions.find(r => { return r.userId == user.id } ); %>
+                                            <% reactionValue = ((userReaction)? userReaction.reaction : 0) %></p>
+                                            <% } %>
+                                            <p class="small text-muted mb-0">Upvote? <%= ((reactionValue > 0) ? 'Upvoted' : ((reactionValue < 0) ? 'Downvoted' : '')) %></p>
+                                            <button id="upvote" class="btn btn-link shadow-none px-0 <%= ((reactionValue > 0) ? 'text-primary' : 'text-muted') %>" formaction="/comments<%= requestUrl %>/<%= comments[i].id %>/1">
                                                 <i class="far fa-thumbs-up mx-2 fa-xs"
                                                     style="margin-top: -0.16rem;"></i>
                                             </button>
                                             <p class="mb-0 <%= ((comments[i].upvoteCount > 0) ? 'text-success fw-bold' : ((comments[i].upvoteCount < 0) ? 'text-danger fw-bold' : 'text-muted')) %>">
                                                 <%= comments[i].upvoteCount %>
                                             </p>
-                                            <button id="downvote" class="btn btn-link shadow-none px-0 text-black" formaction="/comments<%= requestUrl %>/<%= comments[i].id %>/-1">
+                                            <button id="downvote" class="btn btn-link shadow-none px-0 <%= ((reactionValue < 0) ? 'text-danger' : 'text-muted') %>" formaction="/comments<%= requestUrl %>/<%= comments[i].id %>/-1">
                                                 <i class="far fa-thumbs-down mx-2 fa-xs"
                                                     style="margin-top: -0.16rem;"></i>
                                             </button>
