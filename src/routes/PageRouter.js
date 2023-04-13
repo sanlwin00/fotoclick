@@ -10,7 +10,7 @@ PageRouter.get("/photo", (request, response)=>{
     if(request.user)        
         response.render("photo");
     else
-        response.redirect("login?redirectUrl=/photo");
+        response.redirect("/login?redirectUrl=/photo");
 })
 
 //login page - display message if user is being redirected from somewhere

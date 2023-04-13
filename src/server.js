@@ -31,7 +31,7 @@ app.use('/', PageRouter);
 //db
 const sqlPort = config.db_port;
 db.sequelize
-    .sync()
+    .sync({alter:true})
     .then(()=>{
         app.listen(sqlPort, ()=>{
             console.log(`Marida db connection successful - port:${sqlPort}`);

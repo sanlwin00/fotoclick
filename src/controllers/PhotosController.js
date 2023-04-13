@@ -11,24 +11,6 @@ exports.getAllPhotos = (request, response)=>{
         });        
 }
 
-exports.getPhotoWithComments = (request, response)=>{
-    const photoId = request.params.photoId;     
-    db.photo
-        .findOne({
-            where: {id: photoId},
-            include: [
-                { model: db.user, as: 'user' }, 
-                { model: db.comment, as: 'comments', include: [{ model: db.user, as: 'user'}]}
-            ]
-        })
-        .then((photo)=>{                
-            response.render("comment",{photo: photo, comments: photo.comments, requestUrl: request.url} );
-        })
-        .catch((error)=> {
-            response.send(error);
-        });    
-}
-
 exports.createPhoto = (request, response) => {
     const title = request.body.title;
     const description = request.body.description;

@@ -22,7 +22,7 @@
         <li class="nav-item">
           <a class="nav-link d-flex align-items-center" href="/logout">
           <img
-          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (user.id % 30 === 0) ? 31 : user.id % 30 %>).webp"
+          src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= ((user.id % 30 == 0) ? 31 : user.id % 30) %>).webp"
           class="rounded-circle me-1"
           height="22"
           alt="Portrait of a Woman"

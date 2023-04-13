@@ -1,6 +1,7 @@
 <%- include('partials/head') %>
-    <%- include('partials/navbar') %>
-        <%- include('partials/header') %>
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <%- include('partials/navbar') %>
             <!-- Main-->
             <div class="container p-5">
                 <% if(data) { %>
@@ -28,10 +29,12 @@
                                         login
                                     </button>
                                     <% if(redirectUrl) { %>
-                                    <input type="hidden" id="redirectUrl" name="redirectUrl" value="<%= redirectUrl %>" />
-                                    <% } %>
+                                        <input type="hidden" id="redirectUrl" name="redirectUrl"
+                                            value="<%= redirectUrl %>" />
+                                        <% } %>
                                 </div>
                             </div>
                         </form>
             </div>
-            <%- include('partials/footer') %>
+    </div>
+    <%- include('partials/footer') %>

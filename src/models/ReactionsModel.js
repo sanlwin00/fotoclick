@@ -2,8 +2,8 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require(".");
 
 module.exports = (sequelize, DataTypes) => {
-    const Comments = sequelize.define(
-        "comment",
+    const Reactions = sequelize.define(
+        "reaction",
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -13,27 +13,23 @@ module.exports = (sequelize, DataTypes) => {
             userId: {
                 type: DataTypes.INTEGER
             },
-            photoId: {
+            commentId: {
                 type: DataTypes.INTEGER
-            },
-            content: {
-                type: DataTypes.STRING
-            },
-            upvoteCount: {
+            },            
+            reaction: {
                 type: DataTypes.INTEGER,
                 defaultValue: 0
             },
         }
     );
-    // association :  a comment belongs to a user, a comment is linked to a photo, a comment has many reactions
-    Comments.associate = (models) => {        
-        Comments.belongsTo(models.user, {
+    // association :  a reaction belongs to a user, a reaction is linked to a comment
+    Reactions.associate = (models) => {
+        Reactions.belongsTo(models.user, {
             foreignKey: 'userId'
         });
-        Comments.belongsTo(models.photo, {
-            foreignKey: 'photoId'
+        Reactions.belongsTo(models.comment, {
+            foreignKey: 'commentId'
         });
-        Comments.hasMany(models.reaction);
     };
-    return Comments;
+    return Reactions;
 }

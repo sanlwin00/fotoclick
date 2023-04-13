@@ -1,66 +1,91 @@
 <%- include('partials/head') %>
-<%- include('partials/navbar') %>
-<%- include('partials/header') %>
-    <!-- Main-->
-    <div class="container">
-        <div class="row">
-            <div class="col col-12 my-3">
-                <h1>
-                    <%= photo.title %>                    
-                </h1>                
-                <img class="img-fluid" src="/images/<%= photo.dataValues.medialocation %>" />
-                <small>Uploaded by <strong><%= photo.user.username %></strong></small>
-            </div>
-
-        </div>
-    </div>
-    <div class="container">
-        <h1>Comments</h1>
-        <form action="/comments<%=requestUrl%>" method="POST" enctype="application/json">
-            <% if(user) { %>
-                <div class="d-flex mb-3">
-                    <div class="d-flex flex-row align-items-center">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (user.id % 30 === 0) ? 31 : user.id % 30 %>).webp"
-                            alt="avatar" width="25" height="25" />                        
-                    </div>
-                    <div class="flex-grow-1 my-1 mx-2">
-                        <input type="text" class="form-control" id="comment" name="comment"
-                            placeholder="Type comment..." required />
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-outline-secondary btn-rounded" id="sendMessaageButton">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>                        
+    <!-- Wrapper -->
+    <div>
+        <%- include('partials/navbar') %>
+            <!-- Main-->
+            <div id="photo-section" class="container">
+                <div class="row">
+                    <div class="col col-12 my-3">
+                        <h1>
+                            <%= photo.title %>
+                        </h1>
+                        <img class="img-fluid" src="/images/<%= photo.medialocation %>" />
+                        <small>Uploaded by
+                            <strong>
+                                <%= photo.user.username %>
+                            </strong>
+                        </small>
                     </div>
                 </div>
-                <% } else { %>
-                    <div>
-                        <p><a href="/login?redirectUrl=/comments<%= requestUrl %>">Login</a> to add comment.</p>
-                    </div>
-                <% } %>
-                <% for ( var i=0; i <comments.length; i++){ %>
-                    <div class="card mb-4">
-                        <div class="card-body bg-light">
-                            <p>
-                                <%= comments[i].dataValues.content %>
-                            </p>
+            </div>
 
-                            <div class="d-flex justify-content-between">
+            <div id="comment-section" class="container">
+
+                <h2>Comments</h2>
+                <div id="comment-top">
+                    <% if(user) { %>
+                        <form method="POST" enctype="application/json">
+                            <div id="comment-form" class="d-flex mb-1">
                                 <div class="d-flex flex-row align-items-center">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= (comments[i].user.id % 30 === 0) ? 31 : comments[i].user.id % 30 %>).webp"
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= ((user.id % 30 == 0) ? 31 : user.id % 30) %>).webp"
                                         alt="avatar" width="25" height="25" />
-                                    <p class="small mb-0 ms-2"><%= comments[i].user.username %></p>
                                 </div>
-                                <div class="d-flex flex-row align-items-center">
-                                    <p class="small text-muted mb-0">Upvote?</p>
-                                    <i class="far fa-thumbs-up mx-2 fa-xs text-black"
-                                        style="margin-top: -0.16rem;"></i>
-                                    <p class="small text-muted mb-0">3</p>
+                                <div class="flex-grow-1 my-1 mx-2">
+                                    <input type="text" class="form-control" id="comment" name="comment"
+                                        placeholder="Type comment..." required />
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" formaction="/comments<%= requestUrl %>"
+                                        class="btn btn-outline-secondary btn-rounded" id="sendMessaageButton">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                <%}%>
-        </form>
+                        </form>
+                        <% } else { %>
+                            <div>
+                                <p><a href="/login?redirectUrl=/comments<%= requestUrl %>">Login</a> to add comment.
+                                </p>
+                            </div>
+                            <% } %>
+                </div>
+                <div id="comment-bottom">
+                    <form method="POST" enctype="application/json">
+                        <% for (let i=0; i < comments.length; i++) { %>
+                            <div class="card mb-4">
+                                <div class="card-body bg-light">
+                                    <p>
+                                        <%= comments[i].content %>
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(<%= ((comments[i].user.id % 30 == 0) ? 31 : comments[i].user.id % 30) %>).webp"
+                                                alt="avatar" width="25" height="25" />
+                                            <p class="small mb-0 ms-2">
+                                                <%= comments[i].user.username %>
+                                            </p>
+                                        </div>
+                                        <div class="d-flex flex-row align-items-center">
+                                            <p class="small text-muted mb-0">Upvote?</p>
+                                            <button id="upvote" class="btn btn-link shadow-none px-0 text-black" formaction="/comments<%= requestUrl %>/<%= comments[i].id %>/1">
+                                                <i class="far fa-thumbs-up mx-2 fa-xs"
+                                                    style="margin-top: -0.16rem;"></i>
+                                            </button>
+                                            <p class="mb-0 <%= ((comments[i].upvoteCount > 0) ? 'text-success fw-bold' : ((comments[i].upvoteCount < 0) ? 'text-danger fw-bold' : 'text-muted')) %>">
+                                                <%= comments[i].upvoteCount %>
+                                            </p>
+                                            <button id="downvote" class="btn btn-link shadow-none px-0 text-black" formaction="/comments<%= requestUrl %>/<%= comments[i].id %>/-1">
+                                                <i class="far fa-thumbs-down mx-2 fa-xs"
+                                                    style="margin-top: -0.16rem;"></i>
+                                            </button>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    </form>
+                </div>
+            </div>
     </div>
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
