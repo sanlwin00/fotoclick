@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express');
 const app = new express();
 const db = require('./models');
@@ -30,15 +31,16 @@ app.use('/', PageRouter);
 
 //db
 const sqlPort = config.db_port;
+console.log(`*** Attempting to connect to db http://${process.env.DB_HOST}:${sqlPort}`);
 db.sequelize
     .sync({alter:true})
     .then(()=>{
         app.listen(sqlPort, ()=>{
-            console.log(`Marida db connection successful - port:${sqlPort}`);
+            console.log(`*** Db connection successful - port:${sqlPort}`);
         });
     })
     .catch((error)=>{
-        console.error("Unable to connect to the database", error);
+        console.error("*** Unable to connect to the database!!!", error);
     });
 //db.sequelize.sync({force:true}).... would dump/empty the tables in the db, useful for clearing test data
 
@@ -46,6 +48,6 @@ db.sequelize
 const port = config.port;
 
 app.listen(port, () => {   
-    console.log(`Photo app initialized on http://localhost:${port}`);
+    console.log(`*** Photo app initialized on http://localhost:${port}`);
 });
 
